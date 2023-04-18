@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jumbleapi.fullname" . }}
+  labels:
+    {{- include "jumbleapi.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.jumbleapi.autoscaling.enabled }}
+  replicas: {{ .Values.jumbleapi.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "jumbleapi.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "jumbleapi.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.jumbleapi.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.jumbleapi.securityContext | nindent 12 }}
+          image: "{{ .Values.jumbleapi.image.repository }}:{{ .Values.jumbleapi.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.jumbleapi.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.jumbleapi.ports.http }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.jumbleapi.resources | nindent 12 }}
