@@ -1,5 +1,5 @@
 # jumble-api
-Python API server that takes a word and re-arranges the characters randomly
+Python API server that takes a word and re-arranges the characters randomly.  
 The server has two endpoints: open ([http://{host}/random_word/{word}](http://%7Bhost%7D//random_word/%7Bword%7D)) and protected with API key authentication ([http://{host}/random_word_with_auth/{word}](http://%7Bhost%7D/random_word_with_auth/%7Bword%7D)). They both have exactly the same implementation and the only difference is the authentication prompt for the latter.
 The authentication key used in this example is `"Authorization: my-secret-api-key"` taken from the HTTP request headers for simplicity purposes.
 ## Usage
