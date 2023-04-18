@@ -31,7 +31,7 @@ class TestRandomWordAPI(unittest.TestCase):
         self.assertEqual(json.loads(response.text)["detail"], "Not Found")
 
     def test_with_auth_success(self):
-        # Test with successfull authentication
+        # Test with successful authentication
         input_word = "hello"
         endpoint = "random_word_with_auth/"
         token = "my-secret-api-key"
